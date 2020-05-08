@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public final class AppProperties {
 
-    public static Properties PROPERTIES = loadProperties();
+    public static final Properties PROPERTIES = loadProperties();
 
     private static Properties loadProperties() {
         Properties properties = new Properties();

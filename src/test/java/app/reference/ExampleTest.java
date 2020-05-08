@@ -1,43 +1,43 @@
-package app.reference;
+// package app.reference;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
+// import static org.junit.Assert.assertEquals;
+// import static org.junit.Assert.assertFalse;
+// import static org.junit.Assert.assertNotEquals;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+// import org.junit.After;
+// import org.junit.AfterClass;
+// import org.junit.Before;
+// import org.junit.BeforeClass;
+// import org.junit.Test;
 
-public class ExampleTest {
+// public class ExampleTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+// 	@BeforeClass
+// 	public static void setUpBeforeClass() throws Exception {
+// 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+// 	@AfterClass
+// 	public static void tearDownAfterClass() throws Exception {
+// 	}
 
-	@Before
-	public void setUp() throws Exception {
-	}
+// 	@Before
+// 	public void setUp() throws Exception {
+// 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
+// 	@After
+// 	public void tearDown() throws Exception {
+// 	}
 
-	@Test
-	public void encryptPlaintextTest_TextChanges() {
-	}
+// 	@Test
+// 	public void encryptPlaintextTest_TextChanges() {
+// 	}
 
-	@Test
-	public void matchSameEncryption_True() {
-	}
+// 	@Test
+// 	public void matchSameEncryption_True() {
+// 	}
 	
-	@Test
-	public void matchDiffEncryption_False() {
-	}
+// 	@Test
+// 	public void matchDiffEncryption_False() {
+// 	}
 
-}
+// }
