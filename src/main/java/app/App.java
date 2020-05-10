@@ -1,20 +1,23 @@
 package app;
 
+import app.batch.BatchJob;
 import app.client.ServletMain;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.catalina.LifecycleException;
-import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
 
 public class App {
 
     public static void main(final String[] args) {
 
-        System.out.println("\n\n\nHello World!\n\n\n");
+        //startServer();
 
-        startServer();
+        //pause();
+
+        BatchJob.learnRDD();
 
     }
 
@@ -24,8 +27,7 @@ public class App {
         tomcat.setPort(8080);
         tomcat.getConnector();
         tomcat.addWebapp("/project-1-sutter", new File("src/main/resources/").getAbsolutePath());
-        Wrapper helloServlet = tomcat.addServlet("/project-1-sutter", "ServletMain", new ServletMain());
-        helloServlet.addMapping("/main");
+        tomcat.addServlet("/project-1-sutter", "ServletMain", new ServletMain()).addMapping("/main");
         try {
             tomcat.start();
         } catch (LifecycleException e) {
@@ -46,6 +48,14 @@ public class App {
                 }
             }
         });
+    }
+
+    private static void pause() {
+        try {
+            TimeUnit.SECONDS.wait(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

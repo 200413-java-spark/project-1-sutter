@@ -26,6 +26,8 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
 #### Option 1 (format reference)
     mvn clean package
     java -jar target/*.jar arg1 arg2 [arg3/path/to/file.csv]
+#### Option 1 (shortcut)
+    ./run-batch-job.sh
 #### Other options?
     mvn exec:java
     mvn clean exec:java

@@ -8,12 +8,11 @@ import java.sql.SQLException;
 
 public class Database {
 
-    static final Database DATABASE = new Database();
     private static final String URL = PROPERTIES.getProperty("DATABASE_URL");
     private static final String USER = PROPERTIES.getProperty("DATABASE_USER");
     private static final String PASSWORD = PROPERTIES.getProperty("DATABASE_PASSWORD");
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -23,15 +22,15 @@ public class Database {
         return connection;
     }
 
-    public String getUrl() {
+    public static String getUrl() {
         return URL;
     }
 
-    public String getUser() {
+    public static String getUser() {
         return USER;
     }
 
-    public String getPassword() {
+    public static String getPassword() {
         return PASSWORD;
     }
 
