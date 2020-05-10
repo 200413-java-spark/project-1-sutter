@@ -15,7 +15,7 @@ public final class BatchJob {
 
     public static void countNames() {
         
-        final SparkConf conf = new SparkConf().setAppName("Project 1 Mehrab").setMaster("local");
+        final SparkConf conf = new SparkConf().setAppName("project-1-sutter").setMaster("local");
         final JavaSparkContext sparkContext = new JavaSparkContext(conf);
         
         // get number of items in an RDD using JavaRDD.count()
