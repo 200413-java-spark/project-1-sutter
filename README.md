@@ -53,3 +53,7 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
     mvn test -Dtest=DatabaseTest#testConnection
 
     mvn clean test -Dtest=DatabaseTest#testConnection
+
+### Connect to EC2
+
+    ssh -i ~/.ssh/ec2-project-1-sutter.pem ec2-user@3.22.171.75

@@ -56,7 +56,7 @@ public final class BatchJob {
         JavaRDD<String> lines = sc.textFile("data.txt");
         JavaRDD<Integer> lineLengths = lines.map(s -> s.length());
         // save in memory after first computation:
-        lineLengths.persist(StorageLevel.MEMORY_ONLY());
+        lineLengths.persist(StorageLevel.MEMORY_ONLY()); // identical to: lineLengths.cache()
         // execute computation:
         int totalLength = lineLengths.reduce((a, b) -> a + b);
 
