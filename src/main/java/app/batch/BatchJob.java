@@ -8,6 +8,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.storage.StorageLevel;
 
 import scala.Tuple2;
 
@@ -37,21 +38,30 @@ public final class BatchJob {
 
         // CONFIGURATION & CONTEXT
         SparkConf config = new SparkConf().setAppName("project-1-sutter").setMaster("local");
-        JavaSparkContext app = new JavaSparkContext(config);
+        JavaSparkContext sc = new JavaSparkContext(config);
         
         // PARALLELIZED COLLECTIONS
-        List<Integer> dataset = Arrays.asList(1, 2, 3, 4, 5);
-        // let spark set the number of partitions:
-        JavaRDD<Integer> distData = app.parallelize(dataset);
-        // manually set the number of partitions:
-        //JavaRDD<Integer> distData2 = app.parallelize(dataset, 3);
-        // note: typically you want 2-4 partitions for each CPU in your cluster
+        // List<Integer> dataset = Arrays.asList(1, 2, 3, 4, 5);
+        // // let spark set the number of partitions:
+        // JavaRDD<Integer> distData = sc.parallelize(dataset);
+        // // manually set the number of partitions:
+        // //JavaRDD<Integer> distData2 = sc.parallelize(dataset, 3);
+        // // note: typically you want 2-4 partitions for each CPU in your cluster
         
         // EXTERNAL DATASETS
-        //JavaRDD<String> distFile = app.textFile(new File("src/main/resources/lease-data-sample.csv").getAbsolutePath().toString());
+        // //JavaRDD<String> distFile = sc.textFile("data.txt");
+        // JavaRDD<String> distFile = sc.textFile(new File("src/main/resources/lease-data-sample.csv").getAbsolutePath().toString());
+        
+        // OPERATIONS
+        JavaRDD<String> lines = sc.textFile("data.txt");
+        JavaRDD<Integer> lineLengths = lines.map(s -> s.length());
+        // save in memory after first computation:
+        lineLengths.persist(StorageLevel.MEMORY_ONLY());
+        // execute computation:
+        int totalLength = lineLengths.reduce((a, b) -> a + b);
 
         // END SPARK PROCESS
-        app.close();
+        sc.close();
     }
 
 }

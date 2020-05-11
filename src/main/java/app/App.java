@@ -2,6 +2,7 @@ package app;
 
 import app.batch.BatchJob;
 import app.client.ServletMain;
+import app.reference.FunctionalInterfaces;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +18,9 @@ public class App {
 
         //pause();
 
-        BatchJob.learnRDD();
+        //BatchJob.learnRDD();
+
+        FunctionalInterfaces.optionOneExample();
 
     }
 
