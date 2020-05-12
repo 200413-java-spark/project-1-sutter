@@ -16,10 +16,20 @@ public class Database {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    public static boolean closeConnection(final Connection connection) {
+        try {
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static String getUrl() {
