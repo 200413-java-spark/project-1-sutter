@@ -57,3 +57,9 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
 ### Connect to EC2
 
     ssh -i ~/.ssh/ec2-project-1-sutter.pem ec2-user@3.22.171.75
+
+### Connect to Database
+
+    psql --host=ec2-3-22-171-75.us-east-2.compute.amazonaws.com --port=5432 --username=user1 --password --dbname=postgres
+
+    psql postgresql://user1@ec2-3-22-171-75.us-east-2.compute.amazonaws.com:5432/postgres
