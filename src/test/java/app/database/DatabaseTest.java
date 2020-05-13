@@ -11,8 +11,10 @@ public class DatabaseTest {
     
     @Test
     public void testConnection() {
-        Connection connection = Database.getConnection();
-        Assert.assertTrue(Database.closeConnection(connection));
+        Connection connection = null;
+        connection = Database.getConnection();
+        Assert.assertNotNull(connection);
+        Database.closeConnection(connection);
     }
 
 }

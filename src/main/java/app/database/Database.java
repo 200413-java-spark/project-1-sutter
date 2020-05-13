@@ -22,14 +22,14 @@ public class Database {
         return connection;
     }
 
-    public static boolean closeConnection(final Connection connection) {
-        try {
-            connection.close();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public static void closeConnection(final Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return false;
     }
 
     public static String getUrl() {

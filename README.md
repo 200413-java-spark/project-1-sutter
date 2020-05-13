@@ -54,6 +54,8 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
 
     mvn clean test -Dtest=DatabaseTest#testConnection
 
+    mvn clean test -Dtest=EmployeesTest
+
 ### Connect to EC2
 
     ssh -i ~/.ssh/ec2-project-1-sutter.pem ec2-user@3.22.171.75
@@ -63,3 +65,12 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
     psql --host=ec2-3-22-171-75.us-east-2.compute.amazonaws.com --port=5432 --username=user1 --password --dbname=postgres
 
     psql postgresql://user1@ec2-3-22-171-75.us-east-2.compute.amazonaws.com:5432/postgres
+
+### Execute SQL scripts
+
+#### Build Schema
+
+    psql -h ec2-3-22-171-75.us-east-2.compute.amazonaws.com -p 5432 -d postgres -U user1 -a -q -f src/main/resources/schema.sql
+
+#### Show Schema
+
