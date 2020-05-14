@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Database {
+public final class Database {
 
     private static final String URL = PROPERTIES.getProperty("DATABASE_URL");
     private static final String USER = PROPERTIES.getProperty("DATABASE_USER");
@@ -72,6 +72,19 @@ public class Database {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+	}
+
+	public static boolean clearTables() {
+        States table = new States();
+        if(table.count() > 0) {
+            if(table.deleteAll()){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
         }
 	}
 

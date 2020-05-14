@@ -35,21 +35,20 @@ public class States implements Dao<State> {
 
     @Override
     public boolean insert(State s) {
-        // update schema.sql to auto increment primary key?
+        // update schema.sql to auto increment primary key? (use serial)
         String state = s.state;
         Integer leaseCount = s.leaseCount;
         if(state.isEmpty() || state == null || leaseCount.equals(null) || leaseCount.intValue() < 0) {
             return false;
         }
-        String sql = "insert into states(id, state, lease_count) values(?, ?, ?)";
+        String sql = "insert into states(state, lease_count) values(?, ?)";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = Database.getConnection();
             statement = connection.prepareStatement(sql);
-            //statement.setInt(1, state.id);
-            statement.setString(2, state);
-            statement.setInt(3, leaseCount);
+            statement.setString(1, state);
+            statement.setInt(2, leaseCount);
             statement.execute();
             return true;
         } catch (SQLException e) {

@@ -1,11 +1,12 @@
 package app;
 
-import app.batch.BatchJob;
+import app.client.BatchService;
 import app.client.ServletMain;
-import app.reference.FunctionalInterfaces;
+import app.client.StatesService;
+import app.client.StatusService;
+import app.database.Database;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
@@ -13,15 +14,10 @@ import org.apache.catalina.startup.Tomcat;
 public class App {
 
     public static void main(final String[] args) {
-
-        //startServer();
-
-        //pause();
-
-        //BatchJob.learnRDD();
-
-        FunctionalInterfaces.optionOneExample();
-
+        boolean ready = Database.clearTables();
+        if (ready) {
+            startServer();
+        }
     }
 
     public static void startServer() {
@@ -31,6 +27,9 @@ public class App {
         tomcat.getConnector();
         tomcat.addWebapp("/project-1-sutter", new File("src/main/resources/").getAbsolutePath());
         tomcat.addServlet("/project-1-sutter", "ServletMain", new ServletMain()).addMapping("/main");
+        tomcat.addServlet("/project-1-sutter", "StatusService", new StatusService()).addMapping("/status");
+        tomcat.addServlet("/project-1-sutter", "BatchService", new BatchService()).addMapping("/batch");
+        tomcat.addServlet("/project-1-sutter", "StatesService", new StatesService()).addMapping("/leases");
         try {
             tomcat.start();
         } catch (LifecycleException e) {
@@ -51,14 +50,6 @@ public class App {
                 }
             }
         });
-    }
-
-    private static void pause() {
-        try {
-            TimeUnit.SECONDS.wait(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 }

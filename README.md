@@ -27,7 +27,7 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
     mvn clean package
     java -jar target/*.jar arg1 arg2 [arg3/path/to/file.csv]
 #### Option 1 (shortcut)
-    ./run-batch-job.sh
+    ./start-app.sh
 #### Other options?
     mvn exec:java
     mvn clean exec:java
@@ -41,8 +41,11 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
 ### HTTP Requests
 
     curl localhost:8080/project-1-sutter/main
-
     curl "localhost:8080/project-1-sutter/main?firstName=Sutter&lastName=Grune"
+
+    curl localhost:8080/project-1-sutter/status
+    curl localhost:8080/project-1-sutter/batch
+    curl localhost:8080/project-1-sutter/leases?state=TX
 
 ### Unit Tests
 
@@ -57,6 +60,8 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
     mvn clean test -Dtest=StatesTest
     mvn clean test -Dtest=StatesTest#testInsertMany
     mvn clean test -Dtest=StatesTest#testSelect
+
+    mvn clean test -Dtest=BatchJobTest
 
 ### Connect to EC2
 
@@ -76,3 +81,4 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
 
 #### Show Schema
 
+    psql -h ec2-3-22-171-75.us-east-2.compute.amazonaws.com -p 5432 -d postgres -U user1 -a -q -f src/main/resources/display.sql

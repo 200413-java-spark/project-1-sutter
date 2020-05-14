@@ -9,19 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import app.batch.BatchJob;
 
-public class BatchService extends HttpServlet {
-    private String message;
-    private static boolean batchJobExecuted = false;
+public class StatusService extends HttpServlet {
+    String message;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (batchJobExecuted || !BatchJob.status.equals("PENDING")) {
-            message = "\n The batch job has already been executed \n";
-        } else {
-            BatchJob.execute();
-            batchJobExecuted = true;
-            message = "\n The batch job was successfully triggered \n\n The job is now in progress... \n";
-        }
+        String status = BatchJob.status;
+        message = "\n Batch job status: " + status + "\n";
         response.getWriter().println(message);
         response.setContentType("text/html");
     }
