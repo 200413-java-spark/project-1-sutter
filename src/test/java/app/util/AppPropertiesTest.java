@@ -10,7 +10,7 @@ public class AppPropertiesTest {
     @Test
     public void GetPropertiesTest() {
         String user = PROPERTIES.getProperty("DATABASE_USER");
-        assertEquals("user1_admin", user);
+        assertEquals("user1", user);
     }
     
 }

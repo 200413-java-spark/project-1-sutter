@@ -49,12 +49,14 @@ An ETL batch processor that extracts data from a CSV file, transforms the data u
     mvn clean test -Dtest=TestClassName#testOne+testTwo
 
     mvn test -Dtest=DatabaseTest
-
     mvn test -Dtest=DatabaseTest#testConnection
-
     mvn clean test -Dtest=DatabaseTest#testConnection
-
+    
     mvn clean test -Dtest=EmployeesTest
+
+    mvn clean test -Dtest=StatesTest
+    mvn clean test -Dtest=StatesTest#testInsertMany
+    mvn clean test -Dtest=StatesTest#testSelect
 
 ### Connect to EC2
 

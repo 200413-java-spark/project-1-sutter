@@ -13,17 +13,19 @@ public class Employees implements Dao<String> {
         int count = -1;
         String sql = "select count(*) as total from employees";
         Connection connection = null;
+        Statement statement = null;
+        ResultSet rs = null;
         try {
             connection = Database.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            statement = connection.createStatement();
+            rs = statement.executeQuery(sql);
             while (rs.next()) {
                 count = rs.getInt("total");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            Database.closeConnection(connection);
+            Database.closeConnection(connection, statement, rs);
             return count;
         }
     }
@@ -32,17 +34,17 @@ public class Employees implements Dao<String> {
     public boolean insert(String name) {
         String sql = "insert into employees values(2, '" + name + "')";
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = Database.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             statement.execute(sql);
-            statement.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {
-            Database.closeConnection(connection);
+            Database.closeConnection(connection, statement);
         }
     }
 
@@ -68,17 +70,17 @@ public class Employees implements Dao<String> {
     public boolean delete(String name) {
         String sql = "delete from employees where employees.name = '" + name + "'";
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = Database.getConnection();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             statement.execute(sql);
-            statement.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {
-            Database.closeConnection(connection);
+            Database.closeConnection(connection, statement);
         }
     }
 

@@ -4,7 +4,9 @@ import static app.util.AppProperties.PROPERTIES;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Database {
 
@@ -16,13 +18,13 @@ public class Database {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (final SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;
     }
 
-    public static void closeConnection(final Connection connection) {
+    public static void closeConnection(Connection connection) {
         if (connection != null) {
             try {
                 connection.close();
@@ -32,16 +34,45 @@ public class Database {
         }
     }
 
-    public static String getUrl() {
-        return URL;
+    public static void closeConnection(Connection connection, Statement statement) {
+        if(statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public static String getUser() {
-        return USER;
-    }
-
-    public static String getPassword() {
-        return PASSWORD;
-    }
+    public static void closeConnection(Connection connection, Statement statement, ResultSet rs) {
+        if(rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(statement != null) {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+	}
 
 }
