@@ -20,7 +20,7 @@ import scala.Tuple2;
 public final class BatchJob {
     public static final SparkConf config = new SparkConf().setAppName("project-1-sutter").setMaster("local");
     public static JavaSparkContext app;
-    public static final String filePath = new File("src/main/resources/lease-data-sample.csv").getAbsolutePath();
+    public static final String filePath = new File("src/main/resources/gov-lease-data-test.csv").getAbsolutePath();
     public static JavaRDD<String> data;
     public static String status = "PENDING";
 
@@ -41,7 +41,8 @@ public final class BatchJob {
         // split each line of the csv file
         JavaRDD<ArrayList<String>> lines = rdd.map(new Function<String, ArrayList<String>>() {
             public ArrayList<String> call(String line) {
-                String[] arr = line.split(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)", -1);
+                //String[] arr = line.split(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)", -1);
+                String[] arr = line.split(",");
                 ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
                 return list;
             }
@@ -60,20 +61,22 @@ public final class BatchJob {
         });
 
         // get lease counts for each state
-        JavaPairRDD<String, Integer> countLeases = pairs.reduceByKey((x, y) -> ((int) x + (int) y));
-    
-        // convert list of pairs to list of State objects
+        JavaPairRDD<String, Integer> leaseCounts = pairs.reduceByKey((x, y) -> ((int) x + (int) y));
+
+        // convert list of tuples to list of State objects
         List<State> states = new ArrayList<State>();
-        List<Tuple2<String, Integer>> result = countLeases.collect();
+        List<Tuple2<String, Integer>> result = leaseCounts.collect();
+        String state;
+        Integer leaseCount;
         for (Tuple2<String, Integer> pair : result ) {
-            String state = pair._1();
-            Integer leaseCount = pair._2();
+            state = pair._1();
+            leaseCount = pair._2();
             states.add(new State(state, leaseCount));
         }
 
         // persist to database
-        // States dao = new States();
-        // dao.insertMany(states);
+        States database = new States();
+        database.insertMany(states);
 
     }
 

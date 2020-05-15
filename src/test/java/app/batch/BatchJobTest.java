@@ -10,13 +10,16 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import app.database.States;
+
 @Ignore
 public class BatchJobTest {
 
     public static final SparkConf config = new SparkConf().setAppName("project-1-sutter").setMaster("local");
     public static JavaSparkContext app;
-    public static final String filePath = new File("src/test/resources/lease-data-sample-small.csv").getAbsolutePath();
+    public static final String filePath = new File("src/test/resources/gov-lease-data-test-small.csv").getAbsolutePath();
     public static JavaRDD<String> data;
+    public static States databaseTable = new States();
 
     @BeforeClass
     public static void loadData() {
@@ -27,6 +30,8 @@ public class BatchJobTest {
     @Test
     public void testBatchJob(){
         BatchJob.calculateLeaseCountByState(data);
+        Assert.assertEquals(3, databaseTable.count());
+        Assert.assertTrue(databaseTable.deleteAll());
     }
 
     @AfterClass
