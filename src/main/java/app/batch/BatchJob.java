@@ -63,10 +63,6 @@ public final class BatchJob {
         // get lease counts for each state
         JavaPairRDD<String, Integer> leaseCounts = pairs.reduceByKey((x, y) -> ((int) x + (int) y));
 
-        // BREAKPOINT #1
-        // long total = leaseCounts.count();
-        // System.out.println("\n\n COUNT: " + total + "\n\n");
-
         // convert list of tuples to list of State objects
         List<State> states = new ArrayList<State>();
         List<Tuple2<String, Integer>> result = leaseCounts.collect();
@@ -79,14 +75,7 @@ public final class BatchJob {
         }
 
         // clean up data
-        states.removeIf(item -> item.state.isEmpty() || item.state.equals("US"));
-
-        // BREAKPOINT #2
-        // int size = states.size();
-        // System.out.println("\n\n SIZE: " + size + "\n\n");
-        // for (State s : states) {
-        //     System.out.println("\n state: " + s.state + ", count: " + Integer.toString(s.leaseCount));
-        // }
+        states.removeIf(item -> item.state.isEmpty() || item.state.equals("US") || item.state.equals("DC") || item.state.equals("PR") || item.state.equals("BC") || item.state.equals("PQ") || item.state.equals("VI") || item.state.equals("MP") || item.state.equals("NU") || item.state.equals("AS") || item.state.equals("GU"));
 
         // // persist to database
         States database = new States();
