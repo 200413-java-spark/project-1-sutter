@@ -20,20 +20,20 @@ public class StatesService extends HttpServlet {
         String job = BatchJob.status;
         String param = request.getParameter("state");
         if (job.equals("PENDING")) {
-            message = "\n The batch job is currently pending... \n\n You must first execute the batch job... \n";
+            message = "\n The batch job is currently pending... \n You must first execute the batch job... \n";
         } else if (job.equals("IN PROGRESS")) {
-            message = "\n The batch job is currently in progress... \n\n You must wait for the batch job to complete... \n";
+            message = "\n The batch job is currently in progress... \n You must wait for the batch job to complete... \n";
         } else if (param == null) {
-            message = "\n Request parameter 'state' is missing \n\n Example: state=TX \n";
+            message = "\n Request parameter 'state' is missing \n Example: state=TX \n";
         } else if (param.length() != 2) {
-            message = "\n The value of request parameter 'state' is invalid \n\n Expected format: state=TX \n";
+            message = "\n The value of request parameter 'state' is invalid \n Expected format: state=TX \n";
         } else {
             State state = states.select(new State(param));
             if (state == null) {
                 message = "\n Invalid state abbreviation \n";
             } else {
                 Integer leaseCount = state.leaseCount;
-                message = "\n The government of " + state.state + " has " + leaseCount.toString() + " real estate leases \n";
+                message = "\n State: " + state.state + " \n Leases: " + leaseCount.toString() + " \n";
             }
         }
         response.getWriter().println(message);

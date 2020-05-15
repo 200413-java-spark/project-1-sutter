@@ -20,7 +20,8 @@ public class BatchService extends HttpServlet {
         } else {
             BatchJob.execute();
             batchJobExecuted = true;
-            message = "\n The batch job was successfully triggered \n\n The job is now in progress... \n";
+            //message = "\n The batch job was successfully triggered \n\n The job is now in progress... \n";
+            message = "\n The batch job was successfully executed \n";
         }
         response.getWriter().println(message);
         response.setContentType("text/html");

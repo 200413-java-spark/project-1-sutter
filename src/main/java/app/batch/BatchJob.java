@@ -20,7 +20,7 @@ import scala.Tuple2;
 public final class BatchJob {
     public static final SparkConf config = new SparkConf().setAppName("project-1-sutter").setMaster("local");
     public static JavaSparkContext app;
-    public static final String filePath = new File("src/main/resources/gov-lease-data-test.csv").getAbsolutePath();
+    public static final String filePath = new File("src/main/resources/gov-lease-data.csv").getAbsolutePath();
     public static JavaRDD<String> data;
     public static String status = "PENDING";
 
@@ -41,8 +41,8 @@ public final class BatchJob {
         // split each line of the csv file
         JavaRDD<ArrayList<String>> lines = rdd.map(new Function<String, ArrayList<String>>() {
             public ArrayList<String> call(String line) {
-                //String[] arr = line.split(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)", -1);
-                String[] arr = line.split(",");
+                //String[] arr = line.split(",");
+                String[] arr = line.split(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)", -1);
                 ArrayList<String> list = new ArrayList<String>(Arrays.asList(arr));
                 return list;
             }
@@ -63,6 +63,10 @@ public final class BatchJob {
         // get lease counts for each state
         JavaPairRDD<String, Integer> leaseCounts = pairs.reduceByKey((x, y) -> ((int) x + (int) y));
 
+        // BREAKPOINT #1
+        // long total = leaseCounts.count();
+        // System.out.println("\n\n COUNT: " + total + "\n\n");
+
         // convert list of tuples to list of State objects
         List<State> states = new ArrayList<State>();
         List<Tuple2<String, Integer>> result = leaseCounts.collect();
@@ -74,7 +78,17 @@ public final class BatchJob {
             states.add(new State(state, leaseCount));
         }
 
-        // persist to database
+        // clean up data
+        states.removeIf(item -> item.state.isEmpty() || item.state.equals("US"));
+
+        // BREAKPOINT #2
+        // int size = states.size();
+        // System.out.println("\n\n SIZE: " + size + "\n\n");
+        // for (State s : states) {
+        //     System.out.println("\n state: " + s.state + ", count: " + Integer.toString(s.leaseCount));
+        // }
+
+        // // persist to database
         States database = new States();
         database.insertMany(states);
 
