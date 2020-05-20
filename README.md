@@ -1,13 +1,8 @@
 # Project 1
-This application is an ETL batch processor that extracts data from a file, transforms the data using Apache Spark's Resilient Distributed Dataset (RDD), and loads the transformed data into an SQL database. The input file is in CSV format and has 7,997 rows. Each row contains information on a U.S. government real estate lease. The batch process reduces the dataset to determine the total number of U.S. government leases for each U.S. state. The results of the batch process are stored in a PostgreSQL database. The application also includes REST services which provide the status of the batch process, a mechanism for triggering the batch process, and a view of the generated results of the batch process.
-
-## Design
-### Architecture
-### Batch
-### Services
+This application is an ETL batch processor that extracts data from a file, transforms the data using Apache Spark's Resilient Distributed Dataset (RDD), and loads the transformed data into an SQL database. The input file is in CSV format and has 7,997 rows; each row contains information on a U.S. government real estate lease. The batch process reduces the dataset to determine the total number of U.S. government leases for each U.S. state. The resulting output is persisted to an SQL database. The application also includes REST services which provide the status of the batch process, a mechanism for triggering the batch process, and a view of the generated results of the batch process.
 
 ## Build
-### Java
+#### Package Maven Project:
     mvn clean package
 
 ## Usage
@@ -35,11 +30,8 @@ This application is an ETL batch processor that extracts data from a file, trans
 >Note: uncommenting the following pom.xml element will not suffice: <exec.mainClass>app.App</exec.mainClass>
 
 
-### HTTP Requests
-
-    curl localhost:8080/project-1-sutter/main
-    curl "localhost:8080/project-1-sutter/main?firstName=Sutter&lastName=Grune"
-
+## HTTP Requests
+#### Execute batch job
     curl localhost:8080/project-1-sutter/status
     curl localhost:8080/project-1-sutter/batch
     curl localhost:8080/project-1-sutter/leases?state=TX
@@ -48,11 +40,7 @@ This application is an ETL batch processor that extracts data from a file, trans
 
     mvn clean test -Dtest=TestClassName#testOne+testTwo
 
-    mvn test -Dtest=DatabaseTest
-    mvn test -Dtest=DatabaseTest#testConnection
-    mvn clean test -Dtest=DatabaseTest#testConnection
-    
-    mvn clean test -Dtest=EmployeesTest
+    mvn clean test -Dtest=DatabaseTest
 
     mvn clean test -Dtest=StatesTest
     mvn clean test -Dtest=StatesTest#testInsertMany

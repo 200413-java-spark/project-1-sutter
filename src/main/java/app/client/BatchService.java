@@ -10,9 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import app.batch.BatchJob;
 
 public class BatchService extends HttpServlet {
+    
     private String message;
     private static boolean batchJobExecuted = false;
     
+    public void init() throws ServletException {
+        // message = "\n The batch job will now be triggered... \n";
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (batchJobExecuted || !BatchJob.status.equals("PENDING")) {
@@ -25,6 +30,12 @@ public class BatchService extends HttpServlet {
         }
         response.getWriter().println(message);
         response.setContentType("text/html");
+    }
+
+    public void destroy() {
+        // if(!BatchJob.status.equals("COMPLETE")) {
+        //     BatchJob.status = "COMPLETE";
+        // }
     }
 
 }

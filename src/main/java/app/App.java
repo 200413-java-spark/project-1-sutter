@@ -1,7 +1,6 @@
 package app;
 
 import app.client.BatchService;
-import app.client.ServletMain;
 import app.client.StatesService;
 import app.client.StatusService;
 import app.database.Database;
@@ -26,7 +25,6 @@ public class App {
         tomcat.setPort(8080);
         tomcat.getConnector();
         tomcat.addWebapp("/project-1-sutter", new File("src/main/resources/").getAbsolutePath());
-        tomcat.addServlet("/project-1-sutter", "ServletMain", new ServletMain()).addMapping("/main");
         tomcat.addServlet("/project-1-sutter", "StatusService", new StatusService()).addMapping("/status");
         tomcat.addServlet("/project-1-sutter", "BatchService", new BatchService()).addMapping("/batch");
         tomcat.addServlet("/project-1-sutter", "StatesService", new StatesService()).addMapping("/leases");

@@ -99,9 +99,24 @@ public class States implements Dao<State> {
     }
 
     @Override
-    public boolean delete(State e) {
-        // TODO Auto-generated method stub
-        return false;
+    public boolean delete(State s) {
+        if(s == null || s.state.isEmpty() || s.state == null) {
+            return false;
+        }
+        String sql = "delete from states where states.state = '" + s.state + "'";
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = Database.getConnection();
+            statement = connection.createStatement();
+            statement.execute(sql);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            Database.closeConnection(connection, statement);
+        }
     }
 
     @Override
