@@ -45,6 +45,8 @@ This application is an ETL batch processor that extracts data from a file, trans
     mvn clean test -Dtest=StatesTest#testSelect
 #### Test batch job:
     mvn clean test -Dtest=BatchJobTest
+#### Test Spark SQL transformations:
+    mvn clean test -Dtest=SparkSqlTest
 
 ## Database
 #### Connect:

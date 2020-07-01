@@ -1,12 +1,12 @@
 package app.database;
 
-import app.database.Database;
-
 import java.sql.Connection;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class DatabaseTest {
     
     @Test
